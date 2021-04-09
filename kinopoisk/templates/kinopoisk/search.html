@@ -1,0 +1,63 @@
+{% extends 'kinopoisk/base.html' %}
+
+{% block title %}
+поиск
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-success mt-3">
+   Поиск "{{ search }}"</h1>
+
+   <hr>
+   <h3>Найдено фильмов: {{ movies | length }}</h3>
+
+   {% for movie in movies %}
+   <div class="row mb-2 bg-light">
+          <div class="col-1">
+              <img src="{{ movie.poster.url }}"
+                   class="img-fluid">
+          </div>
+
+          <div class="col-3">
+              <h5><a href="{{ movie.get_absolute_url }}">
+                  {{ movie }}</a></h5>
+          </div>
+
+          <div class="col-3">
+              <p>режиссер: {{ movie.director }}</p>
+          </div>
+
+          <div class="col-3">
+              <p>год выхода: {{ movie.year }}</p>
+          </div>
+
+          <div class="col-2">
+              <h3>{{ movie.rating }}</h3>
+          </div>
+   </div>
+   {% endfor %}
+
+<hr>
+   <h3>Найдено режисеров: {{ directors | length }}</h3>
+   {% for director in directors %}
+   <div class="row mb-2 bg-light">
+    <div class="col-2">
+        <img src="{{ director.portrait.url }}"
+             class="img-fluid">
+    </div>
+    <div class="col-3">
+        <h5><a href="{{ director.get_absolute_url }}">
+            {{ director }}</a></h5>
+    </div>
+    <div class="col-7">
+        {% with best=director.best_movie %}
+        <p>лучший фильм:<br>
+            <a href="{{ best.get_absolute_url }}">
+            {{ best }}</a> ({{ best.year }})</p>
+        <h4 class="text-success">
+            {{ best.rating }}</h4>
+        {% endwith %}
+    </div>
+   </div>
+   {% endfor %}
+{% endblock %}

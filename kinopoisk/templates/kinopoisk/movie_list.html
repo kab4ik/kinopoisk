@@ -1,0 +1,31 @@
+{% extends 'kinopoisk/base.html' %}
+
+{% block title %}
+Все фильмы
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-success mt-3">
+    Все фильмы</h1>
+{% for movie in object_list %}
+<div class="row mb-2 bg-light">
+    <div class="col-1">
+        <img src="{{ movie.poster.url }}"
+             class="img-fluid">
+    </div>
+    <div class="col-3">
+        <h5><a href="{{ movie.get_absolute_url }}">
+            {{ movie }}</a></h5>
+    </div>
+    <div class="col-3">
+        <p>режиссер: {{ movie.director }}</p>
+    </div>
+    <div class="col-3">
+        <p>год выхода: {{ movie.year }}</p>
+    </div>
+    <div class="col-2">
+        <h3>{{ movie.rating }}</h3>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

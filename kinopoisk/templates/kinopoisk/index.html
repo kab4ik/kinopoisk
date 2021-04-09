@@ -1,0 +1,85 @@
+{% extends 'kinopoisk/base.html' %}
+
+{% block title %}
+KINOPOISK
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-success">KINOPOISK</h1>
+<hr>
+<h2>Последние добавленные фильмы</h2>
+<div class="row">
+    {% for movie in last_movies %}
+    <div class="col-6">
+        <div class="row mb-2">
+            <div class="col-2">
+                <img src="{{ movie.poster.url }}"
+                     class="img-fluid">
+            </div>
+            <div class="col-5">
+                <h4><a href="{{ movie.get_absolute_url }}">
+                    {{ movie }}</a>
+                    ({{ movie.rating }})</h4>
+            </div>
+            <div class="col-5">
+                <h5>{{ movie.director }}</h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <a class="ml-3"
+            href="{% url 'kinopoisk:movie_list' %}">
+        все фильмы</a>
+</div>
+
+<hr>
+<h2>Лучшие фильмы</h2>
+<div class="row">
+    {% for movie in best_movies %}
+    <div class="col-6">
+        <div class="row mb-2">
+            <div class="col-2">
+                <img src="{{ movie.poster.url }}"
+                     class="img-fluid">
+            </div>
+            <div class="col-5">
+                <h4><a href="{{ movie.get_absolute_url }}">
+                    {{ movie }}</a>
+                    ({{ movie.rating }})</h4>
+            </div>
+            <div class="col-5">
+                <h5>{{ movie.director }}</h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <a class="ml-3"
+            href="{% url 'kinopoisk:best_movie_list' %}">
+        лучшие фильмы</a>
+</div>
+
+<hr>
+<h2>Режиссеры</h2>
+<div class="row">
+    {% for director in directors %}
+    <div class="col-6">
+        <div class="row mb-2">
+            <div class="col-2">
+                <img src="{{ director.portrait.url }}"
+                     class="img-fluid">
+            </div>
+            <div class="col-10">
+                <h5>
+                    <a href="{{ director.get_absolute_url }}">
+                    {{ director }}</a></h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <a class="ml-3"
+            href="{% url 'kinopoisk:director_list' %}">
+        все режиссеры</a>
+</div>
+
+<hr>
+{% endblock %}

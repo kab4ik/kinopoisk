@@ -1,0 +1,50 @@
+{% extends 'kinopoisk/base.html' %}
+
+{% block title %}
+{{ movie }}
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-success mt-3">
+    {{ movie }}</h1>
+<div class="row">
+    <div class="col-2">
+        <img src="{{ movie.poster.url }}"
+             class="img-fluid">
+    </div>
+    <div class="col-3">
+        <p>режиссер:
+            <a href="{{ movie.director.get_absolute_url }}">
+                {{ movie.director }}</a></p>
+        <p>год выхода: {{ movie.year }}</p>
+        <h1>рейтинг: {{ movie.rating }}</h1>
+    </div>
+    <div class="col-3">
+        {% if movie.plot %}
+        <h4>Сюжет фильма:</h4>
+        <small>{{ movie.plot.read.decode }}</small>
+        {% endif %}
+    </div>
+    <div class="col-4">
+        <h5>Комментарии к фильму:</h5>
+        {% if movie.comment_set.all %}
+            <ul>
+            {% for c in movie.comment_set.all %}
+            <li>{{ c.author }}: {{ c }}<br>({{ c.date_time }})</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+        <p>комментариев нет</p>
+        {% endif %}
+        <hr>
+        <form method="post"
+        action="{% url 'kinopoisk:add_comment' movie.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit"
+            value="отправить">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

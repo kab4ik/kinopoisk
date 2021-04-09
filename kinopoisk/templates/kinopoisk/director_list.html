@@ -1,0 +1,33 @@
+{% extends 'kinopoisk/base.html' %}
+
+{% block title %}
+Все режиссеры
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-success mt-3">
+    Все режиссеры</h1>
+{% for director in object_list %}
+<div class="row mb-2 bg-light">
+    <div class="col-2">
+        <img src="{{ director.portrait.url }}"
+             class="img-fluid">
+    </div>
+    <div class="col-3">
+        <h5><a href="{{ director.get_absolute_url }}">
+            {{ director }}</a></h5>
+    </div>
+    <div class="col-7">
+        {% if director.movie_set.all %}
+        {% with best=director.best_movie %}
+        <p>лучший фильм:<br>
+            <a href="{{ best.get_absolute_url }}">
+            {{ best }}</a> ({{ best.year }})</p>
+        <h4 class="text-success">
+            {{ best.rating }}</h4>
+        {% endwith %}
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

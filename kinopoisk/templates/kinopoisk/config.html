@@ -1,0 +1,42 @@
+{% extends 'kinopoisk/base.html' %}
+
+{% block title %}
+Настройки
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-success mt-3">
+   Секретная страница настроек</h1>
+    <hr>
+<div class="row">
+    <div class="col-5 ">
+    <h3>Создание нового фильма</h3>
+    <form class="myform" action="{% url 'kinopoisk:add_new_movie' %}"
+          method="post"
+           enctype="multipart/form-data">
+          {% csrf_token %}
+        {{ movie_model_form }}
+    <input type="submit"
+    value="создать">
+    </form>
+  </div>
+
+    <div class="col-5 ">
+    <h3>Создание нового режисера</h3>
+    <form class="myform"
+          action="{% url 'kinopoisk:add_new_director' %}"
+          method="post"
+           enctype="multipart/form-data">
+          {% csrf_token %}
+        {% for input in director_model_form %}
+        {{ input.label }}
+        {{ input }}
+        {% endfor %}
+    <input type="submit"
+    value="создать">
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

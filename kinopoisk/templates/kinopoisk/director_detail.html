@@ -1,0 +1,39 @@
+{% extends 'kinopoisk/base.html' %}
+
+{% block title %}
+{{ director }}
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center text-success mt-3">
+    {{ director }}</h1>
+<div class="row">
+    <div class="col-3">
+        <img src="{{ director.portrait.url }}"
+             class="img-fluid">
+    </div>
+    <div class="col-9">
+        {% for movie in director.movie_set.all %}
+        <div class="row mt-2">
+            <div class="col-1"></div>
+            <div class="col-1">
+                <img src="{{ movie.poster.url }}"
+                 class="img-fluid">
+            </div>
+            <div class="col-3">
+                <h5><a href="{{ movie.get_absolute_url }}">
+                    {{ movie }}</a></h5>
+            </div>
+            <div class="col-3">
+                <p>год выхода: {{ movie.year }}</p>
+            </div>
+            <div class="col-2">
+                <h3>{{ movie.rating }}</h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
